@@ -7,11 +7,9 @@
 - [[#introduction][Introduction]]
 - [[#screenshots][screenshots]]
 - [[#requirements][Requirements]]
-- [[#how-to-install-pre-requisites][How to install pre-requisites]]
-  - [[#on-arch-linux][on Arch Linux]]
 - [[#installation][Installation]]
+  - [[#git-clone-a-lot-of-things][Git clone a lot of things]]
   - [[#starting-xmonad][Starting Xmonad]]
-- [[#features-what-this-config-achieved-by-importing-xmonad-contrib-libraries][Features (what this config achieved by importing xmonad-contrib libraries)]]
 - [[#notice][Notice]]
 - [[#keyboard-shortcuts][Keyboard shortcuts]]
 
@@ -29,16 +27,35 @@ from [[https://wiki.archlinux.org/index.php/Xmonad][Xmonad Arch Wiki]]
 #+ATTR_HTML: :alt screenshot-1 :style width="600px" height="338px" :title screenshot-1 :align left
 [[https://github.com/oogeek/dotfiles/blob/main/Xmonad/workspaces.png]]
 * Requirements
-- xmonad
-- xmonad-contrib
+- xmonad git
+- xmonad-contrib git
 - xmobar
 - rofi (optional)
 - task (optional) -- a task manager
 - conky (optional)
-* How to install pre-requisites
-** on Arch Linux
-1. pacman -S xmonad xmonad-contrib xmobar
+
 * Installation
+** Git clone a lot of things
+Now assume you want to put things in ~/.xmonad (You can also put it in ~/.config/xmonad)
+#+BEGIN_SRC bash
+cd ~/.xmonad
+git clone https://github.com/xmonad/xmonad-contrib.git
+git clone https://github.com/xmonad/xmonad.git
+
+// If you want to use statically linked xmonad
+yay stack-static
+#+END_SRC
+
+I provide a put.sh that will put extra files in the correct place.
+After that,
+#+BEGIN_SRC bash
+stack init
+stack build
+stack install
+#+END_SRC
+
+Don't forget to add ~/.local/bin to your PATH variable.
+
 ** Starting Xmonad
 *** startx
 #+BEGIN_SRC bash 
@@ -90,13 +107,10 @@ case $session in
 esac
 #+END_SRC
 
-* Features (what this config achieved by importing xmonad-contrib libraries)
-- Users can add tags to windows, shift windows with the same tags, ...
-- Clickable and dynamic workspaces are available, the total number of workspaces is somehow not limited
-- Screencorer action: switching to previous/next workspace, gridselect menu, ...
 * Notice
 No install scripts, do it yourself, and backup any config before testing.
 The default keybindings for switching workspaces and shifting windows are replaced with the ones using numpad. The default ones are removed using "removeKeysP"
+
 * Keyboard shortcuts
 
 | Key conbination | action         |
