@@ -1,0 +1,7 @@
+#!/bin/bash
+cupd=$(checkupdates | wc -l)
+if [[ "$cupd" = "0" ]]; then cupdd="no"
+fi
+echo "$cupd updates"
+cupdd=${cupdd:-$cupd}
+dunstify -u normal -t 500 "$cupdd updates"

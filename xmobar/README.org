@@ -1,0 +1,8 @@
+#+TITLE: Readme
+#+PROPERTY: header-args :tangle README.org
+#+AUTHOR: oogeek
+#+STARTUP: showeverything
+* [[Screenshot]]
+
+* Screenshot
+[[https://github.com/oogeek/dotfiles/raw/main/xmobar/xmobar.png]]

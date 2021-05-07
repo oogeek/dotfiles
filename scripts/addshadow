@@ -1,0 +1,11 @@
+#!/bin/bash -e
+xclip -selection clipboard -t image/png -o | convert -quality 1 - \
+     \( +clone  -alpha extract \
+        -draw 'fill black polygon 0,0 0,8 8,0 fill white circle 8,8 8,0' \
+        \( +clone -flip \) -compose Multiply -composite \
+        \( +clone -flop \) -compose Multiply -composite \
+     \) -alpha off -compose CopyOpacity -composite png:-  | convert - \( +clone -background black -shadow 80x10+5+5 \) +swap -background white -layers merge +repage -bordercolor white -border 10 png:- | xclip -selection clipboard -t image/png 
+
+name="$(date)"
+xclip -selection clipboard -t image/png -o > ~/addshadow/"$name.png"
+dunstify -t 1000 -i ~/addshadow/"$name.png" Screenshot taken
