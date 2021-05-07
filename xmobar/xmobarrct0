@@ -1,0 +1,62 @@
+-- black   = "#21222c"
+-- red     = "#ff5555"
+-- green   = "#50fa7b"
+-- yellow  = "#f1fa8c"
+-- blue    = "#bd93f9"
+-- magenta = "#ff79c6"
+-- cyan    = "#8be9fd"
+-- white   = "#f8f8f2"
+-- orange  = "#ffb86c"
+-- purple  = "#bd9cf9"
+Config { 
+         font = "xft:Ubuntu:weight=bold:pixelsize=16:antialias=true:hinting=true" 
+       , additionalFonts = ["xft:Font Awesome 5 Free:style=Solid:pixelsize=16"
+                            , "xft:Font Awesome 5 Brands:style=:Regular:pixelsize=16"
+                            , "xft:Font Awesome 5 Free:style=:Regular:pixelsize=16"
+                           ]
+       , bgColor = "#282a36"
+       , fgColor = "#f8f8f2"
+       , alpha = 255
+       , position = Static { xpos = 1920 , ypos = 0, width = 2560, height = 30 }
+    -- , position = Top L 
+       , borderColor =  "#373b41"
+       , border = NoBorder
+       -- , overrideRedirect = False
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , commands = [ 
+                      -- Time and date
+                      Run Date "<fn=1>\xf133 </fn> %b %d %H:%M %Y" "date" 60
+                      -- Network up and down
+                    , Run DynNetwork ["-t", "<fn=1>\xf1eb \xf6ff</fn> <dev> <fn=1>\xf0ab </fn> <rx>kb  <fn=1>\xf0aa </fn> <tx>kb", "--","--devices","wlp2s0,enp3s0f1" ] 20
+                    , Run Cpu ["-t", "<fn=1>\xf188 </fn> cpu: <total>%","-H","50","--high","red"] 20
+
+                    , Run MultiCoreTemp  [ "--template" , 
+                           -- "<fn=1>\xf134</fn> Temp: <avg>°C" 
+                             "<avg>°C"
+                             , "--Low"      , "60"  
+                             , "--High"     , "80"
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "yellow"
+                             , "--high"     , "red"
+                            ,"--" ,"--mintemp", "20", "--maxtemp", "100" ] 50
+                    , Run  Alsa "default" "Master" ["-t","<volume>% <status>","--","-C","#50fa7b", "-c","#ff5555", "--alsactl=/usr/bin/alsactl"] 
+                    ,Run  Uptime ["-t", "<fn=1>\xf017 </fn>Up <days>d <hours>h <minutes>m"] 60
+-- Ram used number and percent
+                    , Run Memory ["-t", "<fn=1>\xf538 </fn> mem: <used>M (<usedratio>%)" ] 20
+                      -- Disk space free
+                    , Run DiskU [("/", "<fn=1>\xf0c7 </fn> hdd: <free> free")] [] 60 
+                    , Run Com "/home/oogeek/scripts/pacupdate" [] "pacupdate" 36000
+                      -- Runs a standard shell command 'uname -r' to get kernel version
+                    , Run Com "uname" ["-r"] "" 3600
+                      -- Prints out the left side items such as workspaces, layout, etc.
+                      -- The workspaces are 'clickable' in my configs.
+                    , Run UnsafeXPropertyLog "_XMONAD_LOG_0"  ] 
+
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "<fc=#f8f8f2> | </fc> %_XMONAD_LOG_0% }{  <fc=#8be9fd>%alsa:default:Master%</fc> | <fc=#ff6ac1>%uptime%</fc> | <fc=#f1fa8c>%cpu%</fc> | <fc=#ffb86c>%memory%</fc> | <fc=#51afef>%disku%</fc> | <fc=#5af78e>%dynnetwork%</fc> | <fc=#c678dd><fn=1>  </fn>%pacupdate%</fc> | <fc=#57c7ff> %date%  </fc>"
+
+       }

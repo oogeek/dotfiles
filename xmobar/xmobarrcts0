@@ -1,0 +1,35 @@
+-- black   = "#21222c"
+-- red     = "#ff5555"
+-- green   = "#50fa7b"
+-- yellow  = "#f1fa8c"
+-- blue    = "#bd93f9"
+-- magenta = "#ff79c6"
+-- cyan    = "#8be9fd"
+-- white   = "#f8f8f2"
+-- orange  = "#ffb86c"
+-- purple  = "#bd9cf9"
+Config { 
+         font = "xft:Ubuntu:weight=bold:pixelsize=16:antialias=true:hinting=true" 
+       , additionalFonts = ["xft:Font Awesome 5 Free:style=Solid:pixelsize=16"
+                            , "xft:Font Awesome 5 Brands:style=:Regular:pixelsize=16"
+                            , "xft:Font Awesome 5 Free:style=:Regular:pixelsize=16"
+                           ]
+       , bgColor = "#282a36"
+       , fgColor = "#f8f8f2"
+       , alpha = 255
+       , position = Static { xpos = 1920 , ypos = 1410, width = 2560, height = 30 }
+    -- , position = Top L 
+       , borderColor =  "#373b41"
+       , border = NoBorder
+       -- , overrideRedirect = False
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , commands = [ Run UnsafeXPropertyLog "_XMONAD_LOG_SCREEN_0"  ] 
+
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "<fc=#f8f8f2> |  windows</fc> %_XMONAD_LOG_SCREEN_0% }{"
+
+       }
