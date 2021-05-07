@@ -1,6 +1,5 @@
-# ~/.xmonad/build
 #!/bin/sh
-exec stack ghc -- \
+stack ghc -- \
   --make xmonad.hs \
   -i \
   -ilib \
