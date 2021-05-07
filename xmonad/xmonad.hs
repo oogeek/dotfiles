@@ -1039,26 +1039,28 @@ xmobarWindowLists s = do
     urgents <- readUrgents
     sort <- getSortByIndex
     let wksAll = W.workspaces winset
-    let wksOn = filter ((/= W.currentTag winset) . W.tag) $ sort $ workspacesOn s wksAll
+    let wksOn = filter ((/= W.currentTag winset) . W.tag) $  filter (not . null . W.integrate' . W.stack) $ sort $ workspacesOn s wksAll
     let tag = map W.tag wksOn
-    let wins = filter (not . null) $ map (W.integrate' . W.stack) wksOn
+    -- let wins = map (W.integrate' . W.stack) wksOn
+    let wins = map (\x -> (x, W.integrate' $ W.stack x)) wksOn
 
     let winFmt w | w `elem` urgents         = ppUrgentC
                  | otherwise                = ppFocusC
 
     let clickWinFmt w = clickableWindow w . winFmt w
 
-    let gs = length $ concat wins
+    let gs = length $ concatMap snd wins
+    let wss = length $ map fst wins
     let indices = [ show (n :: Int) | n <- [1..gs] ] 
     let logWins win = mapM getName win >>= \titles -> pure [ " " ++ clickWinFmt w (i ++ ": " ++ sanitize (show tit)) | w <- win | tit <- titles | i <- indices ]
-    let logR = fmap (concatMap ("  | " ++) . fmap concat) (mapM logWins wins)
-    fmap Just logR
-
-    where
+    let logR i = fmap ((("  | " ++ cleanUp (W.tag (fst (wins !! i)))) ++ ) . concat) (logWins $ snd (wins !! i))
+    fmap (Just . concat) $ traverse logR [0..wss-1]
+  where
         ppFocusC   = xmobarBorder "Bottom" "#ffff00" 1 . xmobarColor "#ffff00" ""
         ppUrgentC  = xmobarColor "#ffff00" "#800000:3,1"
         ppUnfocusC = xmobarColor "#b0b040" ""
         sanitize t = xmobarRaw $ shorten 40 t
+        cleanUp = drop 1 . dropWhile isDigit 
 
 xmobarWinConfig :: ScreenId -> PP
 xmobarWinConfig s = xmobarPP {
