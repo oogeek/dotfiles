@@ -29,7 +29,6 @@
   - [[#layout][Layout]]
   - [[#xmobar-related][Xmobar related]]
   - [[#main-config-main][Main Config, Main]]
-- [[#credits][Credits]]
 
 * Introduction
 #+BEGIN_QUOTE
@@ -1246,8 +1245,3 @@ main = do
     }
 
 #+END_SRC
-
-* Credits
-- [[https://github.com/Sloopy3333/Dotfiles][Sloopy3333]] I use the color scheme and part of xmobar icons from this git repo.
-- [[https://github.com/adi1090x/rofi][adi109x rofi]] I use the rofi theme from this repo, although the content not included in my config.
-- [[https://draculatheme.com/][dracula theme]] Both Sloopy3333 and I use this awesome theme. Recommended. 
