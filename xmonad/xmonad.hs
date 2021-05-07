@@ -17,7 +17,6 @@ import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
 
 -- Actions
-import XMonad.Actions.RepeatLastCmd
 import XMonad.Actions.FindEmptyWorkspace
 import XMonad.Actions.PreviousLayout
 import XMonad.Actions.EasyMotion
@@ -1031,7 +1030,7 @@ main = do
     nn <- countScreens
     let barTop = [statusBarPropTo ("_XMONAD_LOG_"++ show n) ("xmobar -x " ++ show n ++ " ~/.config/xmobar/xmobarrct" ++ show n) (copiesPP $ marshallPP (S n) $ constructXmobarConfig (S n)) | n <- [0..nn-1]]
     let barBot = [statusBarPropTo ("_XMONAD_LOG_SCREEN_"++ show n) ("xmobar -x " ++ show n ++ " ~/.config/xmobar/xmobarrcts" ++ show n) (pure $ xmobarWinConfig (S n)) | n <- [0..nn-1]]
-    xmonad . docks . withSB (mconcat $ barTop ++ barBot) . ewmhFullscreen . ewmh . saveActions (mod4Mask, xK_Pause)$ debugManageHook myConfig'
+    xmonad . docks . withSB (mconcat $ barTop ++ barBot) . ewmhFullscreen $ ewmh myConfig'
 
 xmobarWindowLists :: ScreenId -> X (Maybe String)
 xmobarWindowLists s = do
